@@ -1,8 +1,8 @@
 import boto3
 from decouple import config
 
-AWS_ACCESS_KEY_ID = config("AWS_ACCESS_KEY_ID")
-AWS_SECRET_ACCESS_KEY = config("AWS_SECRET_ACCESS_KEY")
+AWS_ACCESS_KEY_ID = config("ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = config("SECRET_ACCESS_KEY")
 
 # Initialize the Cognito client
 client = boto3.client('cognito-idp', region_name='ap-south-1',
