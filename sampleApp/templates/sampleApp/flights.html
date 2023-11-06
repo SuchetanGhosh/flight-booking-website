@@ -14,6 +14,9 @@
   <body>
     <header class="header">
       <h1 class="title">Flight Search</h1>
+      <div class="home-button">
+        <a href="/">Home</a>
+      </div>
     </header>
     <main class="main">
       <div class="flight-search">
@@ -247,31 +250,31 @@
         return cookieValue;
       }
 
-      async function sendTicketRequest(flightID) {
-        try {
-          const csrftoken = getCookie("csrftoken"); // Function to retrieve the CSRF token from cookies
+      // async function sendTicketRequest(flightID) {
+      //   try {
+      //     const csrftoken = getCookie("csrftoken"); // Function to retrieve the CSRF token from cookies
 
-          const response = await fetch("/ticket/", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json;charset=UTF-8",
-              "X-CSRFToken": csrftoken,
-            },
-            body: JSON.stringify({ flightID: flightID }),
-          });
+      //     const response = await fetch("/ticket/", {
+      //       method: "POST",
+      //       headers: {
+      //         "Content-Type": "application/json;charset=UTF-8",
+      //         "X-CSRFToken": csrftoken,
+      //       },
+      //       body: JSON.stringify({ flightID: flightID }),
+      //     });
 
-          if (response.status === 200) {
-            // Handle success if needed
-            console.log("Request was successful");
-          } else {
-            // Handle errors if needed
-            console.error("Error:", await response.text());
-          }
-        } catch (error) {
-          // Handle network errors or other exceptions
-          console.error("An error occurred:", error);
-        }
-      }
+      //     if (response.status === 200) {
+      //       // Handle success if needed
+      //       console.log("Request was successful");
+      //     } else {
+      //       // Handle errors if needed
+      //       console.error("Error:", await response.text());
+      //     }
+      //   } catch (error) {
+      //     // Handle network errors or other exceptions
+      //     console.error("An error occurred:", error);
+      //   }
+      // }
 
       function bookFlight(
         airline,
@@ -300,7 +303,7 @@
         // };
         // const data = JSON.stringify({ flightID: flightID });
         // xhr.send(data);
-        sendTicketRequest(flightID);
+        // sendTicketRequest(flightID);
         localStorage.setItem("flightID", flightID);
         localStorage.setItem("airline", airline);
         localStorage.setItem("depart", depart);

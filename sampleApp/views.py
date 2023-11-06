@@ -17,13 +17,19 @@ def booking_view(request):
 
 @csrf_exempt
 def ticket_view(request):
-    deptDate = datetime.now().strftime('%Y-%m-%d')
-    user = request.session.get('username')
-    amt = request.session.get('amount')
-    fid = request.session.get('flightID')
-       
-    print(user, deptDate, amt, fid)
-    add_transaction(username=user, flight_id=fid, amount=amt, date=deptDate)
+    if request.method == "POST":
+        try:
+            deptDate = datetime.now().strftime('%Y-%m-%d')
+            user = request.session.get('username')
+            data = json.loads(request.body.decode('utf-8'))
+            amt = data.get('amount')
+            fid = data.get('flightid')
+
+            print(data)            
+            print(user, deptDate, amt, fid)
+            add_transaction(username=user, flight_id=fid, amount=amt, date=deptDate)
+        except json.JSONDecodeError as e:
+            print("JSONDecodeError:", str(e))
     return render(request,'sampleApp/ticket.html')
 
 # Django view to handle sign-up AJAX request
@@ -84,45 +90,4 @@ def flights_view(request):
         request.session['max_price'] = max_price
 
         return render(request, 'sampleApp/flights.html', {'flights': flights, 'min_price': min_price, 'max_price': max_price,})
-
-
-def your_view_function(request):
-    city_dict = {
-         'DEL': 'Delhi',
-        'BOM': 'Mumbai',
-        'BLR': 'Bangalore',
-        'MAA': 'Chennai',
-        'COK': 'Kochi',
-        'HYD': 'Hyderabad',
-        'TRV': 'Trivandrum',
-        'CCU': 'Kolkata',
-        'AMD': 'Ahmedabad',
-        'CCJ': 'Kozhikode',
-        'JAI': 'Jaipur',
-        'GOI': 'Goa',
-        'LKO': 'Lucknow',
-        'CJB': 'Coimbatore',
-        'TRZ': 'Tiruchirappalli',
-        'PNQ': 'Pune',
-        'IXB': 'Bagdogra',
-        'GAU': 'Guwahati',
-        'VTZ': 'Visakhapatnam',
-        'ATQ': 'Amritsar',
-        'IXM': 'Madurai',
-        'NAG': 'Nagpur',
-        'IXC': 'Chandigarh',
-        'IXJ': 'Jammu',
-        'SXR': 'Srinagar',
-        'IXE': 'Mangalore',
-        'IXZ': 'Port Blair',
-        'IDR': 'Indore',
-        'IXA': 'Agartala',
-        'PAT': 'Patna'
-    }
-
-    # Other view logic
-
-    return render(request, 'index.html', {'city_dict': city_dict})
-
-
 

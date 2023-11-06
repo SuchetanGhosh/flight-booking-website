@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const arrive = localStorage.getItem("arrive");
   const atime = localStorage.getItem("arrivaltime");
   const price = localStorage.getItem("price");
-  console.log(localStorage.getItem("flightID"));
+  const flightID = localStorage.getItem("flightID");
+  console.log(flightID);
 
   // Populate the ticket details section with these values
   document.querySelector(".ticket-info").innerHTML = `
@@ -54,8 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const passengerDiv = document.createElement("div");
     passengerDiv.className = "passenger-item";
     passengerDiv.innerHTML = `
-            <label>Name: </label><input type="text" name="passengerName" style="width: 600px"><br>
-            <label>Age: </label><input type="number" name="passengerAge" style="width: 600px"><br>
+            <label>Name: </label><input type="text" name="passengerName" style="width: 60%"><br>
+            <label>Age: </label><input type="number" name="passengerAge" style="width: 60%"><br>
             <label>Gender: </label><br>
             <select name="passengerGender">
                 <option value="Male">Male</option>
@@ -77,22 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     count = count - 1;
   });
-
-  function getCookie(name) {
-    let cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-      const cookies = document.cookie.split(";");
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        // Does this cookie string begin with the name we want?
-        if (cookie.substring(0, name.length + 1) === name + "=") {
-          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-          break;
-        }
-      }
-    }
-    return cookieValue;
-  }
 
   // Existing code ...
   document.getElementById("Proceed").addEventListener("click", function () {
@@ -148,18 +133,40 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
 
-    const data = JSON.stringify({ amount: count * price * 1.18 });
+    console.log("Proceed with", flightID);
+
+    const data = JSON.stringify({
+      amount: count * price * 1.18,
+      flightid: flightID,
+    });
     xhr.send(data);
 
-    localStorage.setItem("airline", airline);
-    localStorage.setItem("depart", depart);
-    localStorage.setItem("departuretime", dtime);
-    localStorage.setItem("arrive", arrive);
-    localStorage.setItem("arrivaltime", atime);
-    localStorage.setItem("price", price);
+    // localStorage.setItem("airline", airline);
+    // localStorage.setItem("depart", depart);
+    // localStorage.setItem("departuretime", dtime);
+    // localStorage.setItem("arrive", arrive);
+    // localStorage.setItem("arrivaltime", atime);
+    // localStorage.setItem("price", price);
+    // localStorage.setItem("flightID", flightID);
     localStorage.setItem("passengers", JSON.stringify(passengers));
     localStorage.setItem("Passengercount", count);
 
     window.location.href = "/ticket/"; // replace with the actual path to your ticket.html
   });
 });
+
+function getCookie(name) {
+  let cookieValue = null;
+  if (document.cookie && document.cookie !== "") {
+    const cookies = document.cookie.split(";");
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      // Does this cookie string begin with the name we want?
+      if (cookie.substring(0, name.length + 1) === name + "=") {
+        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+        break;
+      }
+    }
+  }
+  return cookieValue;
+}

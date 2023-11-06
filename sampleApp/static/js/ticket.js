@@ -6,15 +6,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const arrive = localStorage.getItem("arrive");
   const atime = localStorage.getItem("arrivaltime");
   const price = localStorage.getItem("price");
+  const flightID = localStorage.getItem("flightID");
   const passengers = JSON.parse(localStorage.getItem("passengers"));
   let count = localStorage.getItem("Passengercount");
-  console.log(airline, depart, dtime);
+  console.log(airline, depart, dtime, flightID);
 
   // Populate flight details
   document.querySelector(".depart").innerHTML = `
 
         <p>Airline: ${airline}</p>
-
         <h3>Depart</h3>
         <p>${depart}</p>
         <p>Time: ${dtime}</p>
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         <p>Time: ${atime}</p>
     `;
 
-  // console.log(airline,depart,dtime);
+  // console.log(airline, depart, dtime);
 
   // Populate passenger details
   const passengerInfoDiv = document.getElementById("passenger-info");
@@ -38,6 +38,21 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>
         `;
   });
+
+  // const passengerTable = document
+  //   .getElementById("passenger-table")
+  //   .getElementsByTagName("tbody")[0];
+
+  // passengers.forEach((passenger) => {
+  //   const row = passengerTable.insertRow();
+  //   const nameCell = row.insertCell(0);
+  //   const ageCell = row.insertCell(1);
+  //   const genderCell = row.insertCell(2);
+
+  //   nameCell.innerHTML = passenger.name;
+  //   ageCell.innerHTML = passenger.age;
+  //   genderCell.innerHTML = passenger.gender;
+  // });
 
   // Populate fare details (you may want to calculate this dynamically)
   document.querySelector(".total-fare").innerHTML = `
